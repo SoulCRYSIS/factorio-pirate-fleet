@@ -24,13 +24,15 @@ local shadow_width = 576
 local shadow_height = 576
 local width = 448
 local height = 448
+local glow_width = 224
+local glow_height = 224
 
 local function make_skirmisher(scale, health, size_name)
   local range_scale = (scale - 1) * 0.5 + 1
   return {
     type = "spider-unit",
     name = "pirate-skirmisher-" .. size_name,
-    icon = "__pirate-fleet__/icons/pirate-skirmisher.png",
+    icon = "__pirate-fleet__/graphics/icons/pirate-skirmisher.png",
     subgroup = "enemies",
     order = "pirate-d",
     collision_box = { { -1.5 * scale, -1.5 * scale }, { 1.5 * scale, 1.5 * scale } },
@@ -41,12 +43,13 @@ local function make_skirmisher(scale, health, size_name)
     flags = { "placeable-player", "placeable-enemy", "placeable-off-grid", "breaths-air", "not-repairable" },
     max_health = health,
     resistances = {
-      { type = "physical",  decrease = 10 * scale, percent = 50 },
-      { type = "explosion", percent = 50 },
-      { type = "electric",  percent = 80 },
-      { type = "laser",     percent = 80 },
+      { type = "physical",  decrease = 5 * scale, percent = 50 },
+      { type = "explosion", percent = 90 },
+      { type = "electric",  percent = 95 },
+      { type = "laser",     percent = 70 },
+      { type = "piercing",  percent = -100 },
     },
-    healing_per_tick = health / 60 / 60,
+    healing_per_tick = health / 60 / 60 / 4,
     distraction_cooldown = 300,
     min_pursue_time = 300,
     max_pursue_distance = 80,
@@ -56,8 +59,7 @@ local function make_skirmisher(scale, health, size_name)
       health_penalty = 1,
       range_mode = "bounding-box-to-bounding-box",
       cooldown = 6,
-      projectile_creation_distance = 1.2 * scale,
-      projectile_center = { 0, -0.0875 },
+      projectile_creation_distance = 1.3 * scale,
       ammo_type = {
         category = "bullet",
         target_type = "entity",
@@ -68,10 +70,17 @@ local function make_skirmisher(scale, health, size_name)
           {
             {
               type = "instant",
-              source_effects =
-              {
-                type = "create-explosion",
-                entity_name = "explosion-gunshot"
+              source_effects = {
+                {
+                  type = "create-explosion",
+                  entity_name = "explosion-gunshot",
+                  offset = { -0.5 * scale, 0 }
+                },
+                {
+                  type = "create-explosion",
+                  entity_name = "explosion-gunshot",
+                  offset = { 0.5 * scale, 0 }
+                },
               },
               target_effects =
               {
@@ -108,7 +117,7 @@ local function make_skirmisher(scale, health, size_name)
         face_target = false
       },
     },
-    dying_explosion = "big-stomper-pentapod-die",
+    dying_explosion = "pirate-skirmisher-explosion-" .. size_name,
     dying_sound = sounds.dying_sound,
     damaged_trigger_effect = gleba_hit_effects(),
     is_military_target = true,
@@ -120,7 +129,7 @@ local function make_skirmisher(scale, health, size_name)
       render_layer = "elevated-higher-object",
       shadow_animation = {
         filename =
-        "__pirate-fleet__/entities/pirate-skirmisher/pirate-skirmisher-shadow.png",
+        "__pirate-fleet__/graphics/entities/pirate-skirmisher/pirate-skirmisher-shadow.png",
         width = shadow_width,
         height = shadow_height,
         direction_count = 32,
@@ -132,35 +141,29 @@ local function make_skirmisher(scale, health, size_name)
       animation = {
         layers = {
           {
-            filenames = {
-              "__pirate-fleet__/entities/pirate-skirmisher/pirate-skirmisher-1.png",
-              "__pirate-fleet__/entities/pirate-skirmisher/pirate-skirmisher-2.png",
-            },
+            filename = "__pirate-fleet__/graphics/entities/pirate-skirmisher/pirate-skirmisher.png",
             width = width,
             height = height,
             direction_count = 32,
             line_length = 16,
             lines_per_file = 16,
-            frame_count = 16,
+            frame_count = 8,
             animation_speed = 0.2,
             run_mode = "forward-then-backward",
             scale = 0.5 * scale,
             usage = "enemy",
           },
           {
-            filenames = {
-              "__pirate-fleet__/entities/pirate-skirmisher/pirate-skirmisher-glow-1.png",
-              "__pirate-fleet__/entities/pirate-skirmisher/pirate-skirmisher-glow-2.png",
-            },
-            width = width,
-            height = height,
+            filename = "__pirate-fleet__/graphics/entities/pirate-skirmisher/pirate-skirmisher-glow.png",
+            width = glow_width,
+            height = glow_height,
             direction_count = 32,
             line_length = 16,
             lines_per_file = 16,
-            frame_count = 16,
+            frame_count = 8,
             animation_speed = 0.2,
             run_mode = "forward-then-backward",
-            scale = 0.5 * scale,
+            scale = 1 * scale,
             draw_as_glow = true,
             blend_mode = "additive",
             usage = "enemy",
@@ -171,7 +174,7 @@ local function make_skirmisher(scale, health, size_name)
         rotate = true,
         pictures = {
           filename =
-          "__pirate-fleet__/entities/pirate-skirmisher/pirate-skirmisher-water-reflection.png",
+          "__pirate-fleet__/graphics/entities/pirate-skirmisher/pirate-skirmisher-water-reflection.png",
           width = shadow_width + 40,
           height = shadow_height + 40,
           variation_count = 16,
@@ -192,8 +195,8 @@ end
 
 data:extend({
   vehicle_leg,
-  make_skirmisher(1, 150, "small"),
-  make_skirmisher(1.25, 300, "medium"),
-  make_skirmisher(1.6, 580, "big"),
-  make_skirmisher(2, 1100, "behemoth"),
+  make_skirmisher(1, 200, "small"),
+  make_skirmisher(1.25, 480, "medium"),
+  make_skirmisher(1.6, 1000, "big"),
+  make_skirmisher(2, 2000, "behemoth"),
 })
