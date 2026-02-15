@@ -44,7 +44,7 @@ local function make_carrier(scale, health, size_name, summon_positions)
     subgroup = "enemies",
     order = "pirate-c",
     collision_box = { { -3 * scale, -3 * scale }, { 3 * scale, 3 * scale } },
-    sticker_box = { { -3 * scale, -3 * scale }, { 3 * scale, 3 * scale } },
+    sticker_box = { { -1.5 * scale, -1.5 * scale }, { 1.5 * scale, 1.5 * scale } },
     selection_box = { { -3 * scale, -3 * scale }, { 3 * scale, 3 * scale } },
     drawing_box_vertical_extension = 0.5 * scale,
     torso_bob_speed = 0.1,
@@ -53,6 +53,7 @@ local function make_carrier(scale, health, size_name, summon_positions)
     resistances = {
       { type = "physical",  percent = 79 + scale * 10 },
       { type = "explosion", percent = 50 },
+      { type = "fire",      percent = 80 },
       { type = "electric",  percent = 90 },
       { type = "laser",     percent = 90 },
       { type = "piercing",  percent = -100 },

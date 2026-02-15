@@ -35,9 +35,9 @@ local function make_skirmisher(scale, health, size_name)
     icon = "__pirate-fleet__/graphics/icons/pirate-skirmisher.png",
     subgroup = "enemies",
     order = "pirate-d",
-    collision_box = { { -1.5 * scale, -1.5 * scale }, { 1.5 * scale, 1.5 * scale } },
-    sticker_box = { { -1.5 * scale, -1.5 * scale }, { 1.5 * scale, 1.5 * scale } },
-    selection_box = { { -1.5 * scale, -1.5 * scale }, { 1.5 * scale, 1.5 * scale } },
+    collision_box = { { -1 * scale, -1 * scale }, { 1 * scale, 1 * scale } },
+    sticker_box = { { -0.25 * scale, -0.25 * scale }, { 0.25 * scale, 0.25 * scale } },
+    selection_box = { { -1 * scale, -1 * scale }, { 1 * scale, 1 * scale } },
     drawing_box_vertical_extension = 0.5 * scale,
     torso_bob_speed = 0.1,
     flags = { "placeable-player", "placeable-enemy", "placeable-off-grid", "breaths-air", "not-repairable" },
@@ -45,6 +45,7 @@ local function make_skirmisher(scale, health, size_name)
     resistances = {
       { type = "physical",  decrease = 5 * scale, percent = 50 },
       { type = "explosion", percent = 90 },
+      { type = "fire",      percent = 95 },
       { type = "electric",  percent = 95 },
       { type = "laser",     percent = 70 },
       { type = "piercing",  percent = -100 },
@@ -61,7 +62,6 @@ local function make_skirmisher(scale, health, size_name)
       cooldown = 6,
       projectile_creation_distance = 1.3 * scale,
       ammo_type = {
-        category = "bullet",
         target_type = "entity",
         action =
         {
