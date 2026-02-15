@@ -1,6 +1,2 @@
-require("prototypes.fishing-dock")
-require("prototypes.fishing-boat")
-require("prototypes.fishing-recipes")
-require("prototypes.groups")
-require("prototypes.utils")
-require("prototypes.technologies")
+require("prototypes.pirate-carrier")
+require("prototypes.pirate-skirmisher")
