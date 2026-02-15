@@ -24,6 +24,8 @@ local shadow_width = 896
 local shadow_height = 896
 local width = 1024
 local height = 1024
+local glow_width = 512
+local glow_height = 512
 
 local function pictures_file_name(prefix, count)
   local filenames = {}
@@ -136,8 +138,8 @@ local function make_carrier(scale, health, size_name, summon_positions)
           {
             filenames = pictures_file_name("__pirate-fleet__/entities/pirate-carrier/pirate-carrier-glow",
               8),
-            width = width,
-            height = height,
+            width = glow_width,
+            height = glow_height,
             direction_count = 32,
             line_length = 8,
             lines_per_file = 8,
