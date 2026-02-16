@@ -19,9 +19,18 @@ local function make_frigate(scale, health, size_name)
     attack_parameters = {
       type = "projectile",
       range = 20 * range_scale,
-      cooldown = 240,
+      cooldown = 360,
       ammo_category = "melee",
-      ammo_type = data.raw["spider-unit"]["pirate-skirmisher-small"].attack_parameters.ammo_type,
+      ammo_type = {
+        target_type = "entity",
+        action = {
+          type = "direct",
+          action_delivery = {
+            type = "delayed",
+            delayed_trigger = "frigate-barrel-projectile-shooting-sequence-" .. size_name,
+          },
+        },
+      },
       animation = {
         layers = {
           {
@@ -51,7 +60,7 @@ local function make_frigate(scale, health, size_name)
           height = 200
         },
         shift = { 0, -6 * scale },
-        size = 1,
+        size = 1 * scale,
         intensity = 0.7,
         color = { 0.8, 0.7, 0.5 }
       },
