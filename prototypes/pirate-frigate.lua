@@ -1,8 +1,6 @@
 local width = 704
 local height = 704
 
-local health = 5000
-
 local function make_frigate(scale, health, size_name)
   local range_scale = (scale - 1) * 0.5 + 1
   return {
@@ -39,8 +37,8 @@ local function make_frigate(scale, health, size_name)
             height = height,
             scale = 0.5 * scale,
             line_length = 8,
-            lines_per_file = 4,
-            direction_count = 32
+            lines_per_file = 8,
+            direction_count = 64
           }
         }
       }
@@ -55,11 +53,11 @@ local function make_frigate(scale, health, size_name)
           filename = "__core__/graphics/light-cone.png",
           priority = "extra-high",
           flags = { "light" },
-          scale = 1 * scale,
+          scale = 1,
           width = 200,
           height = 200
         },
-        shift = { 0, -6 * scale },
+        shift = { 0, -5 * scale },
         size = 1 * scale,
         intensity = 0.7,
         color = { 0.8, 0.7, 0.5 }
@@ -73,7 +71,7 @@ local function make_frigate(scale, health, size_name)
     distraction_cooldown = 300,
     min_pursue_time = 300,
     max_pursue_distance = 100,
-    dying_explosion = "explosion",
+    dying_explosion = "pirate-skirmisher-explosion-" .. size_name,
     run_animation = {
       layers = {
         {
@@ -82,8 +80,8 @@ local function make_frigate(scale, health, size_name)
           height = height,
           scale = 0.5 * scale,
           line_length = 8,
-          lines_per_file = 4,
-          direction_count = 32,
+          lines_per_file = 8,
+          direction_count = 64,
         },
         {
           filename = "__pirate-fleet__/graphics/entities/pirate-frigate/pirate-frigate-shadow.png",
@@ -91,8 +89,8 @@ local function make_frigate(scale, health, size_name)
           height = height,
           scale = 0.5 * scale,
           line_length = 8,
-          lines_per_file = 4,
-          direction_count = 32,
+          lines_per_file = 8,
+          direction_count = 64,
           draw_as_shadow = true,
         },
         {
@@ -101,8 +99,8 @@ local function make_frigate(scale, health, size_name)
           height = height,
           scale = 0.5 * scale,
           line_length = 8,
-          lines_per_file = 4,
-          direction_count = 32,
+          lines_per_file = 8,
+          direction_count = 64,
           draw_as_glow = true,
           blend_mode = "additive",
         }
@@ -121,21 +119,6 @@ local function make_frigate(scale, health, size_name)
       }
     },
     collision_mask = { layers = { object = true, train = true, ground_tile = true } }, -- Can move on water
-    ai_settings =
-    {
-      join_attacks = true,
-      allow_try_return_to_spawner = true,
-      strafe_settings =
-      {
-        max_distance = 20 * range_scale,
-        ideal_distance = 15 * range_scale,
-        ideal_distance_tolerance = 3 * range_scale,
-        ideal_distance_variance = 3 * range_scale,
-        ideal_distance_importance = 0.5,
-        ideal_distance_importance_variance = 0.1,
-        face_target = false
-      },
-    }
   }
 end
 
