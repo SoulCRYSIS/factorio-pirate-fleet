@@ -28,7 +28,7 @@ local glow_width = 224
 local glow_height = 224
 
 local function make_skirmisher(scale, health, size_name)
-  local range_scale = (scale - 1) * 0.5 + 1
+  local range_scale = (scale - 1) * 0.7 + 1
   return {
     type = "spider-unit",
     name = "pirate-skirmisher-" .. size_name,
@@ -117,7 +117,7 @@ local function make_skirmisher(scale, health, size_name)
         face_target = false
       },
     },
-    dying_explosion = "pirate-skirmisher-explosion-" .. size_name,
+    dying_explosion = "pirate-cannoniere-explosion-" .. size_name,
     dying_sound = sounds.dying_sound,
     damaged_trigger_effect = gleba_hit_effects(),
     is_military_target = true,
@@ -195,8 +195,12 @@ end
 
 data:extend({
   vehicle_leg,
-  make_skirmisher(1, 200, "small"),
-  make_skirmisher(1.25, 480, "medium"),
-  make_skirmisher(1.6, 1000, "big"),
-  make_skirmisher(2, 2000, "behemoth"),
 })
+
+
+local utils = require("prototypes.utils")
+for _, tier in pairs(utils.tiers) do
+  data:extend({
+    make_skirmisher(tier.scale, tier.health_scale * 200, tier.name),
+  })
+end

@@ -1,4 +1,5 @@
 local space_age_sounds = require("__space-age__.prototypes.entity.sounds")
+local explosion_animations = require("__space-age__.prototypes.entity.explosion-animations")
 local sounds = space_age_sounds.stomper_pentapod.big
 
 local vehicle_leg = table.deepcopy(data.raw["spider-leg"]["spidertron-leg-1"])
@@ -12,10 +13,10 @@ vehicle_leg.collision_mask = {
 }
 vehicle_leg.target_position_randomisation_distance = 0
 vehicle_leg.working_sound = nil
-vehicle_leg.minimal_step_size = 0
+vehicle_leg.minimal_step_size = 0.5
 vehicle_leg.movement_based_position_selection_distance = 1.5 -- I have no idea what this does.
-vehicle_leg.initial_movement_speed = 1
-vehicle_leg.movement_acceleration = 0
+vehicle_leg.initial_movement_speed = 0.5
+vehicle_leg.movement_acceleration = 0.01
 vehicle_leg.stretch_force_scalar = 0.1
 vehicle_leg.walking_sound_volume_modifier = 0
 vehicle_leg.selectable_in_game = false
@@ -36,7 +37,7 @@ local function pictures_file_name(prefix, count)
 end
 
 local function make_carrier(scale, health, size_name, summon_positions)
-  local range_scale = (scale - 1) * 0.5 + 1
+  local range_scale = (scale - 1) * 0.7 + 1
   return {
     type = "spider-unit",
     name = "pirate-carrier-" .. size_name,
@@ -107,7 +108,7 @@ local function make_carrier(scale, health, size_name, summon_positions)
     is_military_target = true,
     working_sound = sounds.working_sound,
     warcry = sounds.warcry,
-    height = 1.5 * scale,
+    height = 3 * scale,
     torso_rotation_speed = 0.01,
     graphics_set = {
       render_layer = "elevated-higher-object",
@@ -172,15 +173,64 @@ local function make_carrier(scale, health, size_name, summon_positions)
     spider_engine =
     {
       walking_group_overlap = 1,
-      legs = { leg = "carrier-invisible-leg", mount_position = { 0, 0.5 }, ground_position = { 0, 0 }, blocking_legs = {}, walking_group = 1 },
+      legs = {
+        leg = "carrier-invisible-leg",
+        mount_position = { 0, 0.5 },
+        ground_position = { 0, 0 },
+        blocking_legs = {},
+        walking_group = 1,
+        leg_hit_the_ground_when_attacking_trigger = {
+          {
+            type = "create-fire",
+            entity_name = "fire-flame",
+            probability = 0.5 * scale,
+            offset_deviation = { { -1.5 * scale, -1.5 * scale }, { 1.5 * scale, 1.5 * scale } },
+          },
+          {
+            type = "nested-result",
+            action =
+            {
+              type = "area",
+              radius = 1.5 * scale,
+              force = "enemy",
+              action_delivery =
+              {
+                type = "instant",
+                target_effects =
+                {
+                  {
+                    type = "create-sticker",
+                    sticker = "fire-sticker",
+                    show_in_tooltip = true
+                  },
+                  {
+                    type = "damage",
+                    damage = { amount = 10 * range_scale, type = "fire" },
+                    apply_damage_to_trees = false
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
     }
   }
 end
 
 data:extend({
   vehicle_leg,
-  make_carrier(1, 5000, "small", { { -2, 0 }, { 2, 0 } }),
-  make_carrier(1.25, 12000, "medium", { { -2, 1 }, { 2, 1 }, { 0, -3 } }),
-  make_carrier(1.6, 25000, "big", { { -4, -4 }, { 4, 4 }, { -4, 4 }, { 4, -4 } }),
-  make_carrier(2, 50000, "behemoth", { { -4, -4 }, { 4, 4 }, { -4, 4 }, { 4, -4 }, { 0, 0 } }),
 })
+
+local utils = require("prototypes.utils")
+local summon_positions = {
+  small = { { -2, 0 }, { 2, 0 } },
+  medium = { { -2, 1 }, { 2, 1 }, { 0, -3 } },
+  big = { { -4, -4 }, { 4, 4 }, { -4, 4 }, { 4, -4 } },
+  behemoth = { { -4, -4 }, { 4, 4 }, { -4, 4 }, { 4, -4 }, { 0, 0 } },
+}
+for _, tier in pairs(utils.tiers) do
+  data:extend({
+    make_carrier(tier.scale, tier.health_scale * 5000, tier.name, summon_positions[tier.name]),
+  })
+end

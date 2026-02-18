@@ -1,3 +1,5 @@
+require("prototypes.utils")
+
 require("prototypes.pirate-carrier")
 require("prototypes.pirate-skirmisher")
 require("prototypes.pirate-frigate")

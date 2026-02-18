@@ -3,8 +3,155 @@ local sounds = require("__base__/prototypes/entity/sounds")
 local width = 256
 local height = 256
 
+local function make_cannoniere_projectile(scale, size_name)
+  local damage_scale = (scale - 1) * 0.5 + 1
+  data:extend({
+    {
+      type = "trivial-smoke",
+      name = "cannoniere-projectile-smoke-trail-" .. size_name,
+      animation =
+      {
+        filename = "__base__/graphics/entity/smoke-fast/smoke-fast.png",
+        priority = "high",
+        width = 50,
+        height = 50,
+        frame_count = 16,
+        animation_speed = 16 / 60,
+        scale = 0.4 * scale,
+      },
+      duration = 60,
+      fade_away_duration = 30,
+      show_when_smoke_off = true,
+    },
+    {
+      type = "stream",
+      name = "pirate-cannoniere-projectile-stream-" .. size_name,
+      action = {
+        type = "direct",
+        action_delivery =
+        {
+          type = "instant",
+          target_effects = {
+            {
+              type = "create-entity",
+              entity_name = "big-explosion",
+              only_when_visible = true
+            },
+            {
+              type = "damage",
+              damage = { amount = 75 * damage_scale, type = "explosion" }
+            },
+            {
+              type = "create-entity",
+              entity_name = "medium-scorchmark-tintable",
+              check_buildability = true
+            },
+            {
+              type = "invoke-tile-trigger",
+              repeat_count = 1
+            },
+            {
+              type = "destroy-decoratives",
+              from_render_layer = "decorative",
+              to_render_layer = "object",
+              include_soft_decoratives = true, -- soft decoratives are decoratives with grows_through_rail_path = true
+              include_decals = false,
+              invoke_decorative_trigger = true,
+              decoratives_with_trigger_only = false, -- if true, destroys only decoratives that have trigger_effect set
+              radius = 3.5                           -- large radius for demostrative purposes
+            },
+            {
+              type = "nested-result",
+              action =
+              {
+                type = "area",
+                radius = 2.5 * damage_scale,
+                force = "enemy",
+                action_delivery =
+                {
+                  type = "instant",
+                  target_effects =
+                  {
+                    {
+                      type = "damage",
+                      damage = { amount = 50 * damage_scale, type = "explosion" }
+                    },
+                    {
+                      type = "create-entity",
+                      entity_name = "explosion",
+                      only_when_visible = true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      flags = { "not-on-map" },
+      hidden = true,
+      ground_light = {
+        color = { r = 1, g = 0.9, b = 0.5 },
+        intensity = 0.4,
+        size = 10 * scale
+      },
+      stream_light = {
+        color = { r = 1, g = 0.9, b = 0.5 },
+        intensity = 1,
+        size = 3 * scale
+      },
+      oriented_particle = true,
+      particle = {
+        filename = "__base__/graphics/entity/cluster-grenade/cluster-grenade.png",
+        width = 48,
+        height = 54,
+        animation_speed = 0.25,
+        frame_count = 16,
+        line_length = 8,
+        shift = { 0.015625, 0.015625 },
+        scale = 0.4 * scale,
+      },
+      shadow = {
+        draw_as_shadow = true,
+        filename = "__base__/graphics/entity/grenade/grenade-shadow.png",
+        width = 50,
+        height = 40,
+        animation_speed = 0.25,
+        frame_count = 16,
+        line_length = 8,
+        shift = { 0.0625, 0.1875 },
+        scale = 0.4 * scale,
+      },
+      particle_buffer_size = 1,
+      particle_end_alpha = 1,
+      particle_fade_out_threshold = 1,
+      particle_horizontal_speed = 0.2,
+      particle_horizontal_speed_deviation = 0.04,
+      particle_loop_exit_threshold = 1,
+      particle_loop_frame_count = 1,
+      particle_spawn_interval = 0,
+      particle_spawn_timeout = 1,
+      particle_start_alpha = 1,
+      particle_start_scale = 1,
+      particle_vertical_acceleration = 0.005,
+      progress_to_create_smoke = 0.03,
+      smoke_sources = {
+        {
+          name = "cannoniere-projectile-smoke-trail-" .. size_name,
+          deviation = { 0.1, 0.1 },
+          frequency = 1 / scale,
+          position = { 0, 0 },
+          starting_frame = 4,
+          starting_frame_deviation = 4,
+        }
+      },
+    }
+  })
+end
+
 local function make_cannoniere(scale, health, size_name)
-  local range_scale = (scale - 1) * 0.5 + 1
+  make_cannoniere_projectile(scale, size_name)
+  local range_scale = (scale - 1) * 0.7 + 1
   return {
     type = "unit",
     name = "pirate-cannoniere-" .. size_name,
@@ -77,7 +224,7 @@ local function make_cannoniere(scale, health, size_name)
     distraction_cooldown = 300,
     min_pursue_time = 300,
     max_pursue_distance = 100,
-    dying_explosion = "explosion",
+    dying_explosion = "pirate-cannoniere-explosion-" .. size_name,
     run_animation = {
       layers = {
         {
@@ -128,9 +275,9 @@ local function make_cannoniere(scale, health, size_name)
   }
 end
 
-data:extend({
-  make_cannoniere(1, 500, "small"),
-  make_cannoniere(1.25, 1200, "medium"),
-  make_cannoniere(1.6, 2500, "big"),
-  make_cannoniere(2, 5000, "behemoth"),
-})
+local utils = require("prototypes.utils")
+for _, tier in pairs(utils.tiers) do
+  data:extend({
+    make_cannoniere(tier.scale, tier.health_scale * 500, tier.name),
+  })
+end
