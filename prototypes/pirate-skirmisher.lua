@@ -48,7 +48,7 @@ local function make_skirmisher(scale, health, size_name)
       { type = "fire",      percent = 95 },
       { type = "electric",  percent = 95 },
       { type = "laser",     percent = 70 },
-      { type = "piercing",  percent = -100 },
+      { type = "piercing",  percent = -50 },
     },
     healing_per_tick = health / 60 / 60 / 4,
     distraction_cooldown = 300,
@@ -201,6 +201,6 @@ data:extend({
 local utils = require("prototypes.utils")
 for _, tier in pairs(utils.tiers) do
   data:extend({
-    make_skirmisher(tier.scale, tier.health_scale * 200, tier.name),
+    make_skirmisher(tier.scale, tier.health_scale * 500, tier.name),
   })
 end

@@ -156,6 +156,13 @@ local function make_frigate(scale, health, size_name)
     collision_box = { { -0.5 * scale, -0.75 * scale }, { 0.5 * scale, 0.75 * scale } },
     sticker_box = { { -0.5 * scale, -0.5 * scale }, { 0.5 * scale, 0.5 * scale } },
     selection_box = { { -1 * scale, -1.5 * scale }, { 1 * scale, 1.5 * scale } },
+    resistances = {
+      { type = "physical",  decrease = 5 * scale, percent = 30 },
+      { type = "explosion", percent = 30 },
+      { type = "electric",  percent = 50 },
+      { type = "laser",     percent = 50 },
+      { type = "piercing",  percent = -50 },
+    },
     attack_parameters = {
       type = "projectile",
       range = 20 * range_scale,

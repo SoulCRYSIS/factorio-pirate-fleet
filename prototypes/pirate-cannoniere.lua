@@ -163,6 +163,13 @@ local function make_cannoniere(scale, health, size_name)
     collision_box = { { -0.25 * scale, -0.4 * scale }, { 0.25 * scale, 0.4 * scale } },
     sticker_box = { { -0.25 * scale, -0.25 * scale }, { 0.25 * scale, 0.25 * scale } },
     selection_box = { { -0.5 * scale, -0.5 * scale }, { 0.5 * scale, 0.8 * scale } },
+    resistances = {
+      { type = "physical",  decrease = 3 * scale, percent = 20 },
+      { type = "explosion", percent = 30 },
+      { type = "electric",  percent = 50 },
+      { type = "laser",     percent = 50 },
+      { type = "piercing",  percent = -50 },
+    },
     attack_parameters = {
       type = "projectile",
       range = 16 * range_scale,
@@ -278,6 +285,6 @@ end
 local utils = require("prototypes.utils")
 for _, tier in pairs(utils.tiers) do
   data:extend({
-    make_cannoniere(tier.scale, tier.health_scale * 500, tier.name),
+    make_cannoniere(tier.scale, tier.health_scale * 800, tier.name),
   })
 end

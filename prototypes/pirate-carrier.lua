@@ -1,5 +1,4 @@
 local space_age_sounds = require("__space-age__.prototypes.entity.sounds")
-local explosion_animations = require("__space-age__.prototypes.entity.explosion-animations")
 local sounds = space_age_sounds.stomper_pentapod.big
 
 local vehicle_leg = table.deepcopy(data.raw["spider-leg"]["spidertron-leg-1"])
@@ -52,12 +51,12 @@ local function make_carrier(scale, health, size_name, summon_positions)
     flags = { "placeable-player", "placeable-enemy", "placeable-off-grid", "breaths-air", "not-repairable" },
     max_health = health,
     resistances = {
-      { type = "physical",  percent = 79 + scale * 10 },
+      { type = "physical",  percent = 80 + scale * 10 },
       { type = "explosion", percent = 50 },
       { type = "fire",      percent = 80 },
       { type = "electric",  percent = 90 },
       { type = "laser",     percent = 90 },
-      { type = "piercing",  percent = -100 },
+      { type = "piercing",  percent = -50 },
     },
     healing_per_tick = health / 60 / 60 / 20,
     distraction_cooldown = 300,
