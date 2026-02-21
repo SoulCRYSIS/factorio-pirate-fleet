@@ -5,7 +5,7 @@ local function make_carrier_explosion(scale, size_name)
   return {
     type = "explosion",
     name = "pirate-carrier-explosion-" .. size_name,
-    icon = "__pirate-fleet__/graphics/icons/pirate-carrier.png",
+    icon = "__pirate-fleet-graphics__/icons/pirate-carrier.png",
     flags = { "not-on-map" },
     hidden = true,
     subgroup = "enemy-death-explosions",
@@ -91,7 +91,7 @@ local function make_frigate_explosion(scale, size_name)
   return {
     type = "explosion",
     name = "pirate-frigate-explosion-" .. size_name,
-    icon = "__pirate-fleet__/graphics/icons/pirate-frigate.png",
+    icon = "__pirate-fleet-graphics__/icons/pirate-frigate.png",
     flags = { "not-on-map" },
     hidden = true,
     subgroup = "enemy-death-explosions",
@@ -181,7 +181,7 @@ local function make_cannoniere_explosion(scale, size_name)
   return {
     type = "explosion",
     name = "pirate-cannoniere-explosion-" .. size_name,
-    icon = "__pirate-fleet__/graphics/icons/pirate-cannoniere.png",
+    icon = "__pirate-fleet-graphics__/icons/pirate-cannoniere.png",
     flags = { "not-on-map" },
     hidden = true,
     subgroup = "enemy-death-explosions",

@@ -40,7 +40,7 @@ local function make_carrier(scale, health, size_name, summon_positions)
   return {
     type = "spider-unit",
     name = "pirate-carrier-" .. size_name,
-    icon = "__pirate-fleet__/graphics/icons/pirate-carrier.png",
+    icon = "__pirate-fleet-graphics__/icons/pirate-carrier.png",
     subgroup = "enemies",
     order = "pirate-c",
     collision_box = { { -3 * scale, -3 * scale }, { 3 * scale, 3 * scale } },
@@ -113,7 +113,7 @@ local function make_carrier(scale, health, size_name, summon_positions)
       render_layer = "elevated-higher-object",
       shadow_animation = {
         filename =
-        "__pirate-fleet__/graphics/entities/pirate-carrier/pirate-carrier-shadow.png",
+        "__pirate-fleet-graphics__/entities/pirate-carrier/pirate-carrier-shadow.png",
         width = shadow_width,
         height = shadow_height,
         direction_count = 32,
@@ -125,7 +125,7 @@ local function make_carrier(scale, health, size_name, summon_positions)
       animation = {
         layers = {
           {
-            filenames = pictures_file_name("__pirate-fleet__/graphics/entities/pirate-carrier/pirate-carrier", 4),
+            filenames = pictures_file_name("__pirate-fleet-graphics__/entities/pirate-carrier/pirate-carrier", 4),
             width = width,
             height = height,
             direction_count = 32,
@@ -138,7 +138,7 @@ local function make_carrier(scale, health, size_name, summon_positions)
             usage = "enemy",
           },
           {
-            filename = "__pirate-fleet__/graphics/entities/pirate-carrier/pirate-carrier-glow.png",
+            filename = "__pirate-fleet-graphics__/entities/pirate-carrier/pirate-carrier-glow.png",
             width = glow_width,
             height = glow_height,
             direction_count = 32,
@@ -158,7 +158,7 @@ local function make_carrier(scale, health, size_name, summon_positions)
         rotate = true,
         pictures = {
           filename =
-          "__pirate-fleet__/graphics/entities/pirate-carrier/pirate-carrier-water-reflection.png",
+          "__pirate-fleet-graphics__/entities/pirate-carrier/pirate-carrier-water-reflection.png",
           width = shadow_width + 40,
           height = shadow_height + 40,
           variation_count = 16,

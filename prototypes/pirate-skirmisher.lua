@@ -32,7 +32,7 @@ local function make_skirmisher(scale, health, size_name)
   return {
     type = "spider-unit",
     name = "pirate-skirmisher-" .. size_name,
-    icon = "__pirate-fleet__/graphics/icons/pirate-skirmisher.png",
+    icon = "__pirate-fleet-graphics__/icons/pirate-skirmisher.png",
     subgroup = "enemies",
     order = "pirate-d",
     collision_box = { { -1 * scale, -1 * scale }, { 1 * scale, 1 * scale } },
@@ -129,7 +129,7 @@ local function make_skirmisher(scale, health, size_name)
       render_layer = "elevated-higher-object",
       shadow_animation = {
         filename =
-        "__pirate-fleet__/graphics/entities/pirate-skirmisher/pirate-skirmisher-shadow.png",
+        "__pirate-fleet-graphics__/entities/pirate-skirmisher/pirate-skirmisher-shadow.png",
         width = shadow_width,
         height = shadow_height,
         direction_count = 32,
@@ -141,7 +141,7 @@ local function make_skirmisher(scale, health, size_name)
       animation = {
         layers = {
           {
-            filename = "__pirate-fleet__/graphics/entities/pirate-skirmisher/pirate-skirmisher.png",
+            filename = "__pirate-fleet-graphics__/entities/pirate-skirmisher/pirate-skirmisher.png",
             width = width,
             height = height,
             direction_count = 32,
@@ -154,7 +154,7 @@ local function make_skirmisher(scale, health, size_name)
             usage = "enemy",
           },
           {
-            filename = "__pirate-fleet__/graphics/entities/pirate-skirmisher/pirate-skirmisher-glow.png",
+            filename = "__pirate-fleet-graphics__/entities/pirate-skirmisher/pirate-skirmisher-glow.png",
             width = glow_width,
             height = glow_height,
             direction_count = 32,
@@ -174,7 +174,7 @@ local function make_skirmisher(scale, health, size_name)
         rotate = true,
         pictures = {
           filename =
-          "__pirate-fleet__/graphics/entities/pirate-skirmisher/pirate-skirmisher-water-reflection.png",
+          "__pirate-fleet-graphics__/entities/pirate-skirmisher/pirate-skirmisher-water-reflection.png",
           width = shadow_width + 40,
           height = shadow_height + 40,
           variation_count = 16,

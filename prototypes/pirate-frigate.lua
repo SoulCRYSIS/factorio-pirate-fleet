@@ -97,7 +97,7 @@ local function make_frigate_barrel_projectile(scale, size_name)
       },
       oriented_particle = true,
       particle = {
-        filename = "__pirate-fleet__/graphics/entities/pirate-frigate/pirate-frigate-barrel.png",
+        filename = "__pirate-fleet-graphics__/entities/pirate-frigate/pirate-frigate-barrel.png",
         width = 96,
         height = 96,
         animation_speed = 0.5,
@@ -107,7 +107,7 @@ local function make_frigate_barrel_projectile(scale, size_name)
       },
       shadow = {
         draw_as_shadow = true,
-        filename = "__pirate-fleet__/graphics/entities/pirate-frigate/pirate-frigate-barrel-shadow.png",
+        filename = "__pirate-fleet-graphics__/entities/pirate-frigate/pirate-frigate-barrel-shadow.png",
         width = 96,
         height = 96,
         animation_speed = 0.5,
@@ -148,7 +148,7 @@ local function make_frigate(scale, health, size_name)
   return {
     type = "unit",
     name = "pirate-frigate-" .. size_name,
-    icon = "__pirate-fleet__/graphics/icons/pirate-frigate.png",
+    icon = "__pirate-fleet-graphics__/icons/pirate-frigate.png",
     flags = { "placeable-player", "placeable-enemy", "placeable-off-grid", "breaths-air", "not-repairable" },
     max_health = health,
     subgroup = "enemies",
@@ -181,7 +181,7 @@ local function make_frigate(scale, health, size_name)
       animation = {
         layers = {
           {
-            filename = "__pirate-fleet__/graphics/entities/pirate-frigate/pirate-frigate.png",
+            filename = "__pirate-fleet-graphics__/entities/pirate-frigate/pirate-frigate.png",
             width = width,
             height = height,
             scale = 0.5 * scale,
@@ -224,7 +224,7 @@ local function make_frigate(scale, health, size_name)
     run_animation = {
       layers = {
         {
-          filename = "__pirate-fleet__/graphics/entities/pirate-frigate/pirate-frigate.png",
+          filename = "__pirate-fleet-graphics__/entities/pirate-frigate/pirate-frigate.png",
           width = width,
           height = height,
           scale = 0.5 * scale,
@@ -233,7 +233,7 @@ local function make_frigate(scale, health, size_name)
           direction_count = 64,
         },
         {
-          filename = "__pirate-fleet__/graphics/entities/pirate-frigate/pirate-frigate-shadow.png",
+          filename = "__pirate-fleet-graphics__/entities/pirate-frigate/pirate-frigate-shadow.png",
           width = width,
           height = height,
           scale = 0.5 * scale,
@@ -243,7 +243,7 @@ local function make_frigate(scale, health, size_name)
           draw_as_shadow = true,
         },
         {
-          filename = "__pirate-fleet__/graphics/entities/pirate-frigate/pirate-frigate-glow.png",
+          filename = "__pirate-fleet-graphics__/entities/pirate-frigate/pirate-frigate-glow.png",
           width = width,
           height = height,
           scale = 0.5 * scale,
@@ -259,7 +259,7 @@ local function make_frigate(scale, health, size_name)
       rotate = true,
       pictures = {
         variation_count = 16,
-        filename = "__pirate-fleet__/graphics/entities/pirate-frigate/pirate-frigate-water-reflection.png",
+        filename = "__pirate-fleet-graphics__/entities/pirate-frigate/pirate-frigate-water-reflection.png",
         lines_per_file = 4,
         line_length = 4,
         width = width + 40,
