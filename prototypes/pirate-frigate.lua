@@ -159,9 +159,9 @@ local function make_frigate(scale, health, size_name)
     resistances = {
       { type = "physical",  decrease = 5 * scale, percent = 30 },
       { type = "explosion", percent = 30 },
-      { type = "electric",  percent = 50 },
+      { type = "electric",  percent = 80 },
       { type = "laser",     percent = 50 },
-      { type = "piercing",  percent = -50 },
+      { type = "piercing",  percent = -20 },
     },
     attack_parameters = {
       type = "projectile",

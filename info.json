@@ -9,6 +9,7 @@
     "dependencies": [
       "base >= 2.0",
       "space-age",
-      "pirate-fleet-graphics"
+      "pirate-fleet-graphics",
+      "ballista-turret"
     ]
   }
