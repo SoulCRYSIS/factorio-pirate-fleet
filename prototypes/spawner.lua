@@ -59,7 +59,7 @@ data:extend({
     icon = "__pirate-fleet-graphics__/icons/pirate-fort.png",
     flags = { "placeable-player", "placeable-enemy", "not-repairable", "placeable-off-grid" },
     max_health = 600,
-    order = "va",
+    order = "vsa",
     subgroup = "enemies",
     impact_category = "stone",
     resistances = {
@@ -70,17 +70,15 @@ data:extend({
       { type = "piercing",  percent = -20 },
     },
     healing_per_tick = 0.2,
-    map_generator_bounding_box = { { -4.5, -4.5 }, { 4.5, 4.5 } },                                                           
+    map_generator_bounding_box = { { -5, -5 }, { 5, 5 } },
     collision_box = { { -3.35, -3.35 }, { 3.35, 3.35 } },
-    collision_mask = { layers = { object = true } },
+    collision_mask = { layers = { is_object = true, ground_tile = true } },
     selection_box = { { -3.5, -3.5 }, { 3.5, 3.5 } },
     hit_visualization_box = { { -2.5, -2.5 }, { 2.5, 2.5 } },
     dying_explosion = "medium-explosion",
     damaged_trigger_effect = gleba_hit_effects(),
     max_count_of_owned_units = 4,
-    max_count_of_owned_defensive_units = 2,
-    max_friends_around_to_spawn = 6,
-    max_defensive_friends_around_to_spawn = 4,
+    max_friends_around_to_spawn = 3,
     graphics_set = {
       animations = {
         sheets = {
@@ -131,6 +129,10 @@ data:extend({
     max_spawn_shift = 0,
     max_richness_for_spawn_shift = 100,
     call_for_help_radius = 50,
+    absorptions_per_second = {
+      pollution = { absolute = 50, proportional = 0.025 },
+      spores = { absolute = 50, proportional = 0.025 }
+    },
     -- spawn_decorations_on_expansion = true,
     -- spawn_decoration =
     -- {
@@ -142,7 +144,11 @@ data:extend({
     --     spawn_max_radius = 4
     --   }
     -- },
-    -- autoplace = space_enemy_autoplace.gleba_spawner_autoplace("gleba_spawner_small", "b[enemy]-c[spawner]-b[small]"),
-    loot = { { item = "pentapod-egg", probability = 1, count_min = 1, count_max = 3 } }
+    autoplace = {
+      force = "enemy",
+      probability_expression = 1,
+      order = "pa",
+      richness_expression = 1,
+    },
   },
 })

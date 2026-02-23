@@ -1,4 +1,5 @@
 local space_age_sounds = require("__space-age__.prototypes.entity.sounds")
+local utils = require("prototypes.utils")
 local sounds = space_age_sounds.stomper_pentapod.big
 
 local vehicle_leg = table.deepcopy(data.raw["spider-leg"]["spidertron-leg-1"])
@@ -27,7 +28,10 @@ local height = 448
 local glow_width = 224
 local glow_height = 224
 
-local function make_skirmisher(scale, health, size_name)
+local function make_skirmisher(tier)
+  local scale = tier.scale
+  local health = tier.health_scale * 500
+  local size_name = tier.name
   local range_scale = (scale - 1) * 0.7 + 1
   return {
     type = "spider-unit",
@@ -125,6 +129,7 @@ local function make_skirmisher(scale, health, size_name)
     warcry = sounds.warcry,
     height = 0.5 * scale,
     torso_rotation_speed = 0.02,
+    absorptions_to_join_attack = utils.absorption_to_join_attack(1.5, tier.pollution_scale),
     graphics_set = {
       render_layer = "elevated-higher-object",
       shadow_animation = {
@@ -198,9 +203,8 @@ data:extend({
 })
 
 
-local utils = require("prototypes.utils")
 for _, tier in pairs(utils.tiers) do
   data:extend({
-    make_skirmisher(tier.scale, tier.health_scale * 500, tier.name),
+    make_skirmisher(tier),
   })
 end

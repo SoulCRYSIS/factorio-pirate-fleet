@@ -1,4 +1,5 @@
 local sounds = require("__base__/prototypes/entity/sounds")
+local utils = require("prototypes.utils")
 
 local width = 256
 local height = 256
@@ -149,7 +150,11 @@ local function make_cannoniere_projectile(scale, size_name)
   })
 end
 
-local function make_cannoniere(scale, health, size_name)
+local function make_cannoniere(tier)
+  local scale = tier.scale
+  local health = tier.health_scale * 800
+  local size_name = tier.name
+
   make_cannoniere_projectile(scale, size_name)
   local range_scale = (scale - 1) * 0.7 + 1
   return {
@@ -279,12 +284,17 @@ local function make_cannoniere(scale, health, size_name)
       }
     },
     collision_mask = { layers = { object = true, train = true, ground_tile = true } }, -- Can move on water
+    absorptions_to_join_attack = utils.absorption_to_join_attack(1, tier.pollution_scale),
+    ai_settings = {
+      join_attacks = true,
+      allow_try_return_to_spawner = true,
+      do_separation = true,
+    },
   }
 end
 
-local utils = require("prototypes.utils")
 for _, tier in pairs(utils.tiers) do
   data:extend({
-    make_cannoniere(tier.scale, tier.health_scale * 800, tier.name),
+    make_cannoniere(tier),
   })
 end

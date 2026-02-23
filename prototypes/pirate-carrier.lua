@@ -1,4 +1,5 @@
 local space_age_sounds = require("__space-age__.prototypes.entity.sounds")
+local utils = require("prototypes.utils")
 local sounds = space_age_sounds.stomper_pentapod.big
 
 local vehicle_leg = table.deepcopy(data.raw["spider-leg"]["spidertron-leg-1"])
@@ -35,7 +36,10 @@ local function pictures_file_name(prefix, count)
   return filenames
 end
 
-local function make_carrier(scale, health, size_name, summon_positions)
+local function make_carrier(tier, summon_positions)
+  local scale = tier.scale
+  local health = tier.health_scale * 5000
+  local size_name = tier.name
   local range_scale = (scale - 1) * 0.7 + 1
   return {
     type = "spider-unit",
@@ -90,6 +94,7 @@ local function make_carrier(scale, health, size_name, summon_positions)
     {
       join_attacks = true,
       allow_try_return_to_spawner = true,
+      do_separation = true,
       strafe_settings =
       {
         max_distance = 30 * range_scale,
@@ -109,6 +114,7 @@ local function make_carrier(scale, health, size_name, summon_positions)
     warcry = sounds.warcry,
     height = 3 * scale,
     torso_rotation_speed = 0.01,
+    absorptions_to_join_attack = utils.absorption_to_join_attack(6, tier.pollution_scale),
     graphics_set = {
       render_layer = "elevated-higher-object",
       shadow_animation = {
@@ -221,7 +227,6 @@ data:extend({
   vehicle_leg,
 })
 
-local utils = require("prototypes.utils")
 local summon_positions = {
   small = { { -2, 0 }, { 2, 0 } },
   medium = { { -2, 1 }, { 2, 1 }, { 0, -3 } },
@@ -230,6 +235,6 @@ local summon_positions = {
 }
 for _, tier in pairs(utils.tiers) do
   data:extend({
-    make_carrier(tier.scale, tier.health_scale * 5000, tier.name, summon_positions[tier.name]),
+    make_carrier(tier, summon_positions[tier.name]),
   })
 end
