@@ -1,5 +1,5 @@
-local width = 704
-local height = 704
+local width = 832
+local height = 832
 
 local fort_units = {
   { "pirate-cannoniere-small",  { { 0.0, 0.7 }, { 0.1, 0.7 }, { 0.6, 0 } } },
@@ -55,57 +55,59 @@ end
 data:extend({
   {
     type = "unit-spawner",
-    name = "pirate-fort",
-    icon = "__pirate-fleet-graphics__/icons/pirate-fort.png",
+    name = "pirate-fortress",
+    icon = "__pirate-fleet-graphics__/icons/pirate-fortress.png",
     flags = { "placeable-player", "placeable-enemy", "not-repairable", "placeable-off-grid" },
-    max_health = 600,
+    max_health = 800,
     order = "vsa",
     subgroup = "enemies",
     impact_category = "stone",
     resistances = {
-      { type = "physical",  percent = 90 },
+      { type = "physical",  percent = 90, decrease = 100, },
       { type = "electric",  percent = 50 },
-      { type = "explosion", percent = 50 },
+      { type = "explosion", percent = 50, decrease = 100, },
       { type = "fire",      percent = 80 },
-      { type = "piercing",  percent = -20 },
+      { type = "piercing",  percent = -10 },
     },
-    healing_per_tick = 0.2,
-    map_generator_bounding_box = { { -5, -5 }, { 5, 5 } },
-    collision_box = { { -3.35, -3.35 }, { 3.35, 3.35 } },
+    healing_per_tick = 0.5,
+    map_generator_bounding_box = { { -6, -6 }, { 6, 6 } },
+    collision_box = { { -4.25, -4.25 }, { 4.25, 4.25 } },
     collision_mask = { layers = { is_object = true, ground_tile = true } },
-    selection_box = { { -3.5, -3.5 }, { 3.5, 3.5 } },
-    hit_visualization_box = { { -2.5, -2.5 }, { 2.5, 2.5 } },
-    dying_explosion = "medium-explosion",
+    selection_box = { { -4.5, -4.5 }, { 4.5, 4.5 } },
+    hit_visualization_box = { { -3, -3 }, { 3, 3 } },
+    dying_explosion = "big-explosion",
     damaged_trigger_effect = gleba_hit_effects(),
-    max_count_of_owned_units = 4,
+    max_count_of_owned_units = 2,
+    max_count_of_owned_defensive_units = 1,
     max_friends_around_to_spawn = 3,
+    max_defensive_friends_around_to_spawn = 2,
     graphics_set = {
       animations = {
         sheets = {
           {
-            filename = "__pirate-fleet-graphics__/entities/pirate-fort/pirate-fort.png",
+            filename = "__pirate-fleet-graphics__/entities/pirate-fortress/pirate-fortress.png",
             width = width,
             height = height,
             scale = 0.5,
-            line_length = 4,
-            variation_count = 4,
+            line_length = 5,
+            variation_count = 5,
           },
           {
-            filename = "__pirate-fleet-graphics__/entities/pirate-fort/pirate-fort-shadow.png",
+            filename = "__pirate-fleet-graphics__/entities/pirate-fortress/pirate-fortress-shadow.png",
             width = width,
             height = height,
             scale = 0.5,
-            line_length = 4,
-            variation_count = 4,
+            line_length = 5,
+            variation_count = 5,
             draw_as_shadow = true,
           },
           {
-            filename = "__pirate-fleet-graphics__/entities/pirate-fort/pirate-fort-glow.png",
+            filename = "__pirate-fleet-graphics__/entities/pirate-fortress/pirate-fortress-glow.png",
             width = width,
             height = height,
             scale = 0.5,
-            line_length = 4,
-            variation_count = 4,
+            line_length = 5,
+            variation_count = 5,
             draw_as_glow = true,
             blend_mode = "additive",
           }
@@ -113,25 +115,25 @@ data:extend({
       },
       water_reflection = {
         pictures = {
-          filename = "__pirate-fleet-graphics__/entities/pirate-fort/pirate-fort-water-reflection.png",
+          filename = "__pirate-fleet-graphics__/entities/pirate-fortress/pirate-fortress-water-reflection.png",
           width = width + 40,
           height = height + 40,
           scale = 0.5,
-          line_length = 4,
-          variation_count = 4,
+          line_length = 5,
+          variation_count = 5,
         },
       }
     },
     result_units = fort_units,
-    spawning_cooldown = { 360, 150 },
+    spawning_cooldown = { 720, 300 },
     spawning_radius = 12,
     spawning_spacing = 5,
     max_spawn_shift = 0,
     max_richness_for_spawn_shift = 100,
     call_for_help_radius = 50,
     absorptions_per_second = {
-      pollution = { absolute = 50, proportional = 0.025 },
-      spores = { absolute = 50, proportional = 0.025 }
+      pollution = { absolute = 50, proportional = 0.02 },
+      spores = { absolute = 50, proportional = 0.02 }
     },
     -- spawn_decorations_on_expansion = true,
     -- spawn_decoration =
