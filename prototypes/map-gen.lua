@@ -17,7 +17,7 @@ data:extend({
   {
     type = "noise-expression",
     name = "pirate_base_radius_nauvis",
-    expression = "sqrt(control:pirate_base_nauvis:size) * (15 + 4 * enemy_base_intensity)"
+    expression = "sqrt(control:pirate_base_nauvis:size * 1.5) * (15 + 4 * enemy_base_intensity)"
   },
   {
     type = "noise-expression",

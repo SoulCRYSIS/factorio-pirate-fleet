@@ -105,11 +105,12 @@ local function make_skirmisher(tier)
       range = 10 * range_scale,
       sound = sounds.gun_turret_gunshot
     },
-    vision_distance = 50,
+    vision_distance = 80,
     ai_settings =
     {
       join_attacks = true,
       allow_try_return_to_spawner = true,
+      size_in_group = 1.5,
       strafe_settings =
       {
         max_distance = 10 * range_scale,

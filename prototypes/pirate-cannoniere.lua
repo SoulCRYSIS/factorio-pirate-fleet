@@ -4,8 +4,7 @@ local utils = require("prototypes.utils")
 local width = 256
 local height = 256
 
-local function make_cannoniere_projectile(scale, size_name)
-  local damage_scale = (scale - 1) * 0.5 + 1
+local function make_cannoniere_projectile(scale, size_name, damage_scale)
   data:extend({
     {
       type = "trivial-smoke",
@@ -154,9 +153,11 @@ local function make_cannoniere(tier)
   local scale = tier.scale
   local health = tier.health_scale * 800
   local size_name = tier.name
+  local range_scale = tier.range_scale
+  local damage_scale = tier.damage_scale
 
-  make_cannoniere_projectile(scale, size_name)
-  local range_scale = (scale - 1) * 0.7 + 1
+  make_cannoniere_projectile(scale, size_name, damage_scale)
+
   return {
     type = "unit",
     name = "pirate-cannoniere-" .. size_name,
@@ -228,7 +229,7 @@ local function make_cannoniere(tier)
         color = { 0.8, 0.7, 0.5 }
       },
     },
-    vision_distance = 50,
+    vision_distance = 60,
     movement_speed = 0.05,
     rotation_speed = 0.005,
     distance_per_frame = 1,
@@ -289,6 +290,7 @@ local function make_cannoniere(tier)
       join_attacks = true,
       allow_try_return_to_spawner = true,
       do_separation = true,
+      size_in_group = 2,
     },
   }
 end

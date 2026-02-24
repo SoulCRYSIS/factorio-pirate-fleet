@@ -39,8 +39,10 @@ end
 local function make_carrier(tier, summon_positions)
   local scale = tier.scale
   local health = tier.health_scale * 5000
+  local range_scale = tier.range_scale
   local size_name = tier.name
-  local range_scale = (scale - 1) * 0.7 + 1
+  local damage_scale = tier.damage_scale
+
   return {
     type = "spider-unit",
     name = "pirate-carrier-" .. size_name,
@@ -95,6 +97,7 @@ local function make_carrier(tier, summon_positions)
       join_attacks = true,
       allow_try_return_to_spawner = true,
       do_separation = true,
+      size_in_group = 10,
       strafe_settings =
       {
         max_distance = 30 * range_scale,
@@ -210,7 +213,7 @@ local function make_carrier(tier, summon_positions)
                   },
                   {
                     type = "damage",
-                    damage = { amount = 10 * range_scale, type = "fire" },
+                    damage = { amount = 10 * damage_scale, type = "fire" },
                     apply_damage_to_trees = false
                   }
                 }
