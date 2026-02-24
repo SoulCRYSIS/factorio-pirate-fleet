@@ -17,13 +17,13 @@ data:extend({
   {
     type = "noise-expression",
     name = "pirate_base_radius_nauvis",
-    expression = "sqrt(control:pirate_base_nauvis:size * 1.5) * (15 + 4 * enemy_base_intensity)"
+    expression = "sqrt(control:pirate_base_nauvis:size) * (15 + 4 * enemy_base_intensity) * 1.3"
   },
   {
     type = "noise-expression",
     name = "pirate_base_frequency_nauvis",
     -- bases_per_km2 = 10 + 3 * enemy_base_intensity
-    expression = "(0.00001 + 0.000003 * enemy_base_intensity) * control:pirate_base_nauvis:frequency"
+    expression = "(0.00001 + 0.000003 * enemy_base_intensity) * control:pirate_base_nauvis:frequency * 0.6"
   },
   {
     type = "noise-expression",
@@ -82,8 +82,13 @@ data:extend({
   },
   {
     type = "noise-expression",
-    name = "pirate_spawner",
-    expression = "min(0.02, pirate_base_autoplace(0, 9)) * gleba_select(elevation, -100, -10, 3, 0, 1)",
+    name = "pirate_fortress_probability",
+    expression = "min(0.02, pirate_base_autoplace(0, 9)) * gleba_select(elevation, -100, -10, 3, 0, 1) / 3",
+  },
+  {
+    type = "noise-expression",
+    name = "pirate_citadel_probability",
+    expression = "min(0.02, pirate_base_autoplace(3, 10)) * gleba_select(elevation, -100, -10, 3, 0, 1) / 20",
   },
 })
 
@@ -92,9 +97,12 @@ if nauvis_map_gen then
   nauvis_map_gen.property_expression_names["pirate_base_radius"] = "pirate_base_radius_nauvis"
   nauvis_map_gen.property_expression_names["pirate_base_frequency"] = "pirate_base_frequency_nauvis"
   nauvis_map_gen.property_expression_names["entity:pirate-fortress:control"] = "pirate_base_nauvis"
-  nauvis_map_gen.property_expression_names["entity:pirate-fortress:probability"] = "pirate_spawner"
+  nauvis_map_gen.property_expression_names["entity:pirate-fortress:probability"] = "pirate_fortress_probability"
+  nauvis_map_gen.property_expression_names["entity:pirate-citadel:control"] = "pirate_base_nauvis"
+  nauvis_map_gen.property_expression_names["entity:pirate-citadel:probability"] = "pirate_citadel_probability"
   nauvis_map_gen.autoplace_controls["pirate_base_nauvis"] = {}
   nauvis_map_gen.autoplace_settings["entity"].settings["pirate-fortress"] = {}
+  nauvis_map_gen.autoplace_settings["entity"].settings["pirate-citadel"] = {}
 end
 
 local gleba_map_gen = data.raw["planet"]["gleba"].map_gen_settings
@@ -102,7 +110,10 @@ if gleba_map_gen then
   gleba_map_gen.property_expression_names["pirate_base_radius"] = "pirate_base_radius_gleba"
   gleba_map_gen.property_expression_names["pirate_base_frequency"] = "pirate_base_frequency_gleba"
   gleba_map_gen.property_expression_names["entity:pirate-fortress:control"] = "pirate_base_gleba"
-  gleba_map_gen.property_expression_names["entity:pirate-fortress:probability"] = "pirate_spawner"
+  gleba_map_gen.property_expression_names["entity:pirate-fortress:probability"] = "pirate_fortress_probability"
+  gleba_map_gen.property_expression_names["entity:pirate-citadel:control"] = "pirate_base_gleba"
+  gleba_map_gen.property_expression_names["entity:pirate-citadel:probability"] = "pirate_citadel_probability"
   gleba_map_gen.autoplace_controls["pirate_base_gleba"] = {}
   gleba_map_gen.autoplace_settings["entity"].settings["pirate-fortress"] = {}
+  gleba_map_gen.autoplace_settings["entity"].settings["pirate-citadel"] = {}
 end

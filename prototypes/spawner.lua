@@ -1,5 +1,8 @@
-local width = 832
-local height = 832
+local fortress_width = 832
+local fortress_height = 832
+
+local citadel_width = 1216
+local citadel_height = 1216
 
 local fortress_units = {
   { "pirate-cannoniere-small",  { { 0.0, 0.7 }, { 0.1, 0.7 }, { 0.6, 0 } } },
@@ -10,7 +13,7 @@ local fortress_units = {
   { "pirate-frigate-big",       { { 0.6, 0 }, { 0.95, 0.3 }, { 1, 0.3 } } },
 }
 
-local lair_units = {
+local citadel_units = {
   { "pirate-cannoniere-small",  { { 0.0, 0.2 }, { 0.1, 0.2 }, { 0.6, 0 } } },
   { "pirate-frigate-small",     { { 0.0, 0.1 }, { 0.1, 0.1 }, { 0.6, 0 } } },
   { "pirate-skirmisher-small",  { { 0.0, 0 }, { 0.4, 0.5 }, { 0.6, 0 } } },
@@ -36,7 +39,7 @@ if mods["behemoth-enemies"] or mods["virentis"] then
     { "pirate-cannoniere-behemoth", { { 0.85, 0 }, { 0.95, 0.7 }, { 1.0, 0.7 } } },
     { "pirate-frigate-behemoth",    { { 0.85, 0 }, { 0.95, 0.3 }, { 1.0, 0.3 } } },
   }
-  lair_units = {
+  citadel_units = {
     { "pirate-cannoniere-small",  { { 0.0, 0.2 }, { 0.1, 0.2 }, { 0.6, 0 } } },
     { "pirate-frigate-small",     { { 0.0, 0.1 }, { 0.1, 0.1 }, { 0.6, 0 } } },
     { "pirate-skirmisher-small",  { { 0.0, 0 }, { 0.4, 0.5 }, { 0.6, 0 } } },
@@ -77,7 +80,7 @@ data:extend({
     collision_box = { { -4.25, -4.25 }, { 4.25, 4.25 } },
     collision_mask = { layers = { is_object = true, ground_tile = true } },
     selection_box = { { -4.5, -4.5 }, { 4.5, 4.5 } },
-    hit_visualization_box = { { -3, -3 }, { 3, 3 } },
+    hit_visualization_box = { { -3.5, -3.5 }, { 3.5, 3.5 } },
     dying_explosion = "big-explosion",
     damaged_trigger_effect = gleba_hit_effects(),
     max_count_of_owned_units = 2,
@@ -89,16 +92,16 @@ data:extend({
         sheets = {
           {
             filename = "__pirate-fleet-graphics__/entities/pirate-fortress/pirate-fortress.png",
-            width = width,
-            height = height,
+            width = fortress_width,
+            height = fortress_height,
             scale = 0.5,
             line_length = 5,
             variation_count = 5,
           },
           {
             filename = "__pirate-fleet-graphics__/entities/pirate-fortress/pirate-fortress-shadow.png",
-            width = width,
-            height = height,
+            width = fortress_width,
+            height = fortress_height,
             scale = 0.5,
             line_length = 5,
             variation_count = 5,
@@ -106,8 +109,8 @@ data:extend({
           },
           {
             filename = "__pirate-fleet-graphics__/entities/pirate-fortress/pirate-fortress-glow.png",
-            width = width,
-            height = height,
+            width = fortress_width,
+            height = fortress_height,
             scale = 0.5,
             line_length = 5,
             variation_count = 5,
@@ -119,8 +122,8 @@ data:extend({
       water_reflection = {
         pictures = {
           filename = "__pirate-fleet-graphics__/entities/pirate-fortress/pirate-fortress-water-reflection.png",
-          width = width + 40,
-          height = height + 40,
+          width = fortress_width + 40,
+          height = fortress_height + 40,
           scale = 0.5,
           line_length = 5,
           variation_count = 5,
@@ -151,16 +154,16 @@ data:extend({
     -- },
     autoplace = {
       force = "enemy",
-      probability_expression = 1,
-      order = "pa",
+      probability_expression = 0,
+      order = "pb",
       richness_expression = 1,
     },
   },
-  -- Lair
+  -- Citadel
   {
     type = "unit-spawner",
-    name = "pirate-lair",
-    icon = "__pirate-fleet-graphics__/icons/pirate-lair.png",
+    name = "pirate-citadel",
+    icon = "__pirate-fleet-graphics__/icons/pirate-citadel.png",
     flags = { "placeable-player", "placeable-enemy", "not-repairable", "placeable-off-grid" },
     max_health = 1500,
     order = "vsb",
@@ -176,10 +179,10 @@ data:extend({
       { type = "piercing",  percent = -20 },
     },
     healing_per_tick = 1,
-    map_generator_bounding_box = { { -9, -9 }, { 9, 9 } },
-    collision_box = { { -7.25, -7.25 }, { 7.25, 7.25 } },
+    map_generator_bounding_box = { { -8, -8 }, { 8, 8 } },
+    collision_box = { { -6.25, -6.25 }, { 6.25, 6.25 } },
     collision_mask = { layers = { is_object = true, ground_tile = true } },
-    selection_box = { { -7.5, -7.5 }, { 7.5, 7.5 } },
+    selection_box = { { -6.5, -6.5 }, { 6.5, 6.5 } },
     hit_visualization_box = { { -5, -5 }, { 5, 5 } },
     dying_explosion = "rocket-silo-explosion",
     damaged_trigger_effect = gleba_hit_effects(),
@@ -191,46 +194,46 @@ data:extend({
       animations = {
         sheets = {
           {
-            filename = "__pirate-fleet-graphics__/entities/pirate-lair/pirate-lair.png",
-            width = width,
-            height = height,
+            filename = "__pirate-fleet-graphics__/entities/pirate-citadel/pirate-citadel.png",
+            width = citadel_width,
+            height = citadel_height,
             scale = 0.5,
-            line_length = 5,
-            variation_count = 5,
+            line_length = 4,
+            variation_count = 4,
           },
           {
-            filename = "__pirate-fleet-graphics__/entities/pirate-lair/pirate-lair-shadow.png",
-            width = width,
-            height = height,
+            filename = "__pirate-fleet-graphics__/entities/pirate-citadel/pirate-citadel-shadow.png",
+            width = citadel_width,
+            height = citadel_height,
             scale = 0.5,
-            line_length = 5,
-            variation_count = 5,
+            line_length = 4,
+            variation_count = 4,
             draw_as_shadow = true,
           },
-          {
-            filename = "__pirate-fleet-graphics__/entities/pirate-lair/pirate-lair-glow.png",
-            width = width,
-            height = height,
-            scale = 0.5,
-            line_length = 5,
-            variation_count = 5,
-            draw_as_glow = true,
-            blend_mode = "additive",
-          }
+          -- {
+          --   filename = "__pirate-fleet-graphics__/entities/pirate-citadel/pirate-citadel-glow.png",
+          --   width = citadel_width,
+          --   height = citadel_height,
+          --   scale = 0.5,
+          --   line_length = 4,
+          --   variation_count = 4,
+          --   draw_as_glow = true,
+          --   blend_mode = "additive",
+          -- }
         }
       },
       water_reflection = {
         pictures = {
-          filename = "__pirate-fleet-graphics__/entities/pirate-lair/pirate-lair-water-reflection.png",
-          width = width + 40,
-          height = height + 40,
+          filename = "__pirate-fleet-graphics__/entities/pirate-citadel/pirate-citadel-water-reflection.png",
+          width = citadel_width + 40,
+          height = citadel_height + 40,
           scale = 0.5,
-          line_length = 5,
-          variation_count = 5,
+          line_length = 4,
+          variation_count = 4,
         },
       }
     },
-    result_units = lair_units,
+    result_units = citadel_units,
     spawning_cooldown = { 360, 150 },
     spawning_radius = 18,
     spawning_spacing = 5,
@@ -252,9 +255,10 @@ data:extend({
     --     spawn_max_radius = 4
     --   }
     -- },
+    enemy_map_color = { 0, 0.9, 0},
     autoplace = {
       force = "enemy",
-      probability_expression = 1,
+      probability_expression = 0,
       order = "pa",
       richness_expression = 1,
     },
