@@ -1,29 +1,12 @@
 data:extend({
   {
     type = "autoplace-control",
-    name = "pirate_base_nauvis",
-    richness = false,
-    order = "pa",
-    category = "enemy",
-  },
-  {
-    type = "autoplace-control",
     name = "pirate_base_gleba",
     richness = false,
     order = "pb",
     category = "enemy",
   },
 
-  {
-    type = "noise-expression",
-    name = "pirate_base_radius_nauvis",
-    expression = "sqrt(control:pirate_base_nauvis:size) * (20 + 5 * enemy_base_intensity)"
-  },
-  {
-    type = "noise-expression",
-    name = "pirate_base_frequency_nauvis",
-    expression = "(0.000003 + 0.0000015 * enemy_base_intensity) * control:pirate_base_nauvis:frequency"
-  },
   {
     type = "noise-expression",
     name = "pirate_base_radius_gleba",
@@ -90,19 +73,6 @@ data:extend({
     expression = "min(0.02, pirate_base_autoplace(1, 10)) * gleba_select(elevation, -500, -10, 3, 0, 1) / 20",
   },
 })
-
-local nauvis_map_gen = data.raw["planet"]["nauvis"].map_gen_settings
-if nauvis_map_gen then
-  nauvis_map_gen.property_expression_names["pirate_base_radius"] = "pirate_base_radius_nauvis"
-  nauvis_map_gen.property_expression_names["pirate_base_frequency"] = "pirate_base_frequency_nauvis"
-  nauvis_map_gen.property_expression_names["entity:pirate-fortress:control"] = "pirate_base_nauvis"
-  nauvis_map_gen.property_expression_names["entity:pirate-fortress:probability"] = "pirate_fortress_probability"
-  nauvis_map_gen.property_expression_names["entity:pirate-citadel:control"] = "pirate_base_nauvis"
-  nauvis_map_gen.property_expression_names["entity:pirate-citadel:probability"] = "pirate_citadel_probability"
-  nauvis_map_gen.autoplace_controls["pirate_base_nauvis"] = {}
-  nauvis_map_gen.autoplace_settings["entity"].settings["pirate-fortress"] = {}
-  nauvis_map_gen.autoplace_settings["entity"].settings["pirate-citadel"] = {}
-end
 
 local gleba_map_gen = data.raw["planet"]["gleba"].map_gen_settings
 if gleba_map_gen then

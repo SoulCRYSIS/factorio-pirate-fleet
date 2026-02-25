@@ -13,8 +13,8 @@ data:extend({
   convert_remove_collision("coral-stunted"),
   convert_remove_collision("pink-phalanges"),
   convert_remove_collision("coral-water"),
-  convert_remove_collision("split-gill-2x2"),
-  convert_remove_collision("split-gill-red-2x2"),
   convert_remove_collision("urchin-cactus"),
   convert_remove_collision("brambles"),
+  convert_remove_collision("green-cup"),
+  convert_remove_collision("green-lettuce-lichen-water-6x6"),
 })

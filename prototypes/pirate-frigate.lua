@@ -3,7 +3,7 @@ local utils = require("prototypes.utils")
 local width = 704
 local height = 704
 
-local function make_frigate_barrel_projectile(scale, size_name, damage_scale)
+local function make_frigate_barrel_projectile(scale, size_name, damage_scale, summon_count)
   data:extend({
     {
       type = "delayed-active-trigger",
@@ -76,10 +76,10 @@ local function make_frigate_barrel_projectile(scale, size_name, damage_scale)
             {
               type = "create-entity",
               entity_name = size_name .. "-wriggler-pentapod-premature",
-              offset_deviation = { { -1 * scale, -1 * scale }, { 1 * scale, 1 * scale } },
+              offset_deviation = { { -1.6 * scale, -1.6 * scale }, { 1.6 * scale, 1.6 * scale } },
               check_buildability = true,
               find_non_colliding_position = true,
-              repeat_count = 3,
+              repeat_count = summon_count,
             },
           }
         }
@@ -143,14 +143,14 @@ local function make_frigate_barrel_projectile(scale, size_name, damage_scale)
   })
 end
 
-local function make_frigate(tier)
+local function make_frigate(tier, summon_count)
   local scale = tier.scale
   local health = tier.health_scale * 2000
   local size_name = tier.name
   local range_scale = tier.range_scale
   local damage_scale = tier.damage_scale
 
-  make_frigate_barrel_projectile(scale, size_name, damage_scale)
+  make_frigate_barrel_projectile(scale, size_name, damage_scale, summon_count)
 
   return {
     type = "unit",
@@ -287,8 +287,15 @@ local function make_frigate(tier)
   }
 end
 
+local summon_count = {
+  small = 2,
+  medium = 3,
+  big = 4,
+  behemoth = 5,
+}
+
 for _, tier in pairs(utils.tiers) do
   data:extend({
-    make_frigate(tier),
+    make_frigate(tier, summon_count[tier.name]),
   })
 end

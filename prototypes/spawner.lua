@@ -62,18 +62,35 @@ local function spawn_decoratives(min_radius_increase, max_radius_increase)
       decorative = "pirate-curly-roots-grey",
       spawn_min = 2,
       spawn_max = 3,
-      spawn_min_radius = 3,
-      spawn_max_radius = 5,
+      spawn_min_radius = 4,
+      spawn_max_radius = 6,
+      spread_evenly = true,
+    },
+    {
+      type = "create-decorative",
+      decorative = "pirate-green-lettuce-lichen-water-6x6",
+      spawn_min = 3,
+      spawn_max = 5,
+      spawn_min_radius = 4.5,
+      spawn_max_radius = 6.5,
       spread_evenly = true,
     },
     {
       type = "create-decorative",
       decorative = "pirate-coral-stunted",
-      spawn_min = 2,
-      spawn_max = 3,
+      spawn_min = 3,
+      spawn_max = 5,
       spawn_min_radius = 4.5,
       spawn_max_radius = 6.5,
       spread_evenly = true,
+    },
+    {
+      type = "create-decorative",
+      decorative = "pirate-green-cup",
+      spawn_min = 4,
+      spawn_max = 8,
+      spawn_min_radius = 4.5,
+      spawn_max_radius = 6.5,
     },
     {
       type = "create-decorative",
@@ -86,34 +103,18 @@ local function spawn_decoratives(min_radius_increase, max_radius_increase)
     {
       type = "create-decorative",
       decorative = "pirate-red-croton",
-      spawn_min = 8,
-      spawn_max = 12,
+      spawn_min = 12,
+      spawn_max = 20,
       spawn_min_radius = 4.5,
       spawn_max_radius = 6.5,
     },
     {
       type = "create-decorative",
       decorative = "pirate-green-croton",
-      spawn_min = 8,
-      spawn_max = 12,
+      spawn_min = 12,
+      spawn_max = 20,
       spawn_min_radius = 4.5,
       spawn_max_radius = 6.5,
-    },
-    {
-      type = "create-decorative",
-      decorative = "pirate-split-gill-2x2",
-      spawn_min = 4,
-      spawn_max = 8,
-      spawn_min_radius = 5,
-      spawn_max_radius = 7,
-    },
-    {
-      type = "create-decorative",
-      decorative = "pirate-split-gill-red-2x2",
-      spawn_min = 4,
-      spawn_max = 8,
-      spawn_min_radius = 5,
-      spawn_max_radius = 7,
     },
     {
       type = "create-decorative",
@@ -134,8 +135,8 @@ local function spawn_decoratives(min_radius_increase, max_radius_increase)
     {
       type = "create-decorative",
       decorative = "pirate-coral-water",
-      spawn_min = 3,
-      spawn_max = 6,
+      spawn_min = 4,
+      spawn_max = 8,
       spawn_min_radius = 6,
       spawn_max_radius = 9,
     },
@@ -144,6 +145,7 @@ local function spawn_decoratives(min_radius_increase, max_radius_increase)
   for _, decoration in pairs(decorations) do
     decoration.spawn_min_radius = decoration.spawn_min_radius + min_radius_increase 
     decoration.spawn_max_radius = decoration.spawn_max_radius + max_radius_increase
+    decoration.radius_curve = 0.3
   end
 
   return decorations
@@ -236,7 +238,7 @@ data:extend({
       spores = { absolute = 40, proportional = 0.02 }
     },
     spawn_decorations_on_expansion = true,
-    spawn_decoration = spawn_decoratives(0, 0),
+    spawn_decoration = spawn_decoratives(0, 2),
     autoplace = {
       force = "enemy",
       probability_expression = 0,
@@ -330,7 +332,7 @@ data:extend({
       spores = { absolute = 80, proportional = 0.04 }
     },
     spawn_decorations_on_expansion = true,
-    spawn_decoration = spawn_decoratives(2, 1),
+    spawn_decoration = spawn_decoratives(2, 4),
     autoplace = {
       force = "enemy",
       probability_expression = 0,
