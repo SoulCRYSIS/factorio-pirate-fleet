@@ -171,9 +171,10 @@ local function make_cannoniere(tier)
     selection_box = { { -0.5 * scale, -0.8 * scale }, { 0.5 * scale, 0.8 * scale } },
     resistances = {
       { type = "physical",  decrease = 3 * scale, percent = 20 },
-      { type = "explosion", percent = 30 },
+      { type = "explosion", percent = 50 },
       { type = "electric",  percent = 50 },
       { type = "laser",     percent = 50 },
+      { type = "fire",      percent = 50 },
       { type = "piercing",  percent = -20 },
     },
     attack_parameters = {
@@ -226,7 +227,7 @@ local function make_cannoniere(tier)
         shift = { 0, -4 * scale },
         size = 1 * scale,
         intensity = 0.7,
-        color = { 0.8, 0.7, 0.5 }
+        color = { 0.9, 0.6, 0.4 }
       },
     },
     vision_distance = 60,
@@ -291,6 +292,7 @@ local function make_cannoniere(tier)
       allow_try_return_to_spawner = true,
       do_separation = true,
       size_in_group = 2,
+      destroy_when_commands_fail = true,
     },
   }
 end

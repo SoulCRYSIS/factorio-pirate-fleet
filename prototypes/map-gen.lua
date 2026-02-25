@@ -17,24 +17,22 @@ data:extend({
   {
     type = "noise-expression",
     name = "pirate_base_radius_nauvis",
-    expression = "sqrt(control:pirate_base_nauvis:size) * (15 + 4 * enemy_base_intensity) * 1.3"
+    expression = "sqrt(control:pirate_base_nauvis:size) * (20 + 5 * enemy_base_intensity)"
   },
   {
     type = "noise-expression",
     name = "pirate_base_frequency_nauvis",
-    -- bases_per_km2 = 10 + 3 * enemy_base_intensity
-    expression = "(0.00001 + 0.000003 * enemy_base_intensity) * control:pirate_base_nauvis:frequency * 0.6"
+    expression = "(0.000003 + 0.0000015 * enemy_base_intensity) * control:pirate_base_nauvis:frequency"
   },
   {
     type = "noise-expression",
     name = "pirate_base_radius_gleba",
-    expression = "sqrt(control:pirate_base_gleba:size) * (15 + 4 * enemy_base_intensity)"
+    expression = "sqrt(control:pirate_base_gleba:size) * (20 + 5 * enemy_base_intensity)"
   },
   {
     type = "noise-expression",
     name = "pirate_base_frequency_gleba",
-    -- bases_per_km2 = 10 + 3 * enemy_base_intensity
-    expression = "(0.00001 + 0.000003 * enemy_base_intensity) * control:pirate_base_gleba:frequency"
+    expression = "(0.000003 + 0.0000015 * enemy_base_intensity) * control:pirate_base_gleba:frequency"
   },
 
   {
@@ -83,12 +81,13 @@ data:extend({
   {
     type = "noise-expression",
     name = "pirate_fortress_probability",
-    expression = "min(0.02, pirate_base_autoplace(0, 9)) * gleba_select(elevation, -100, -10, 3, 0, 1) / 3",
+    expression = "min(0.02, pirate_base_autoplace(0, 9)) * gleba_select(elevation, -500, -10, 3, 0, 1) / 3",
   },
   {
     type = "noise-expression",
     name = "pirate_citadel_probability",
-    expression = "min(0.02, pirate_base_autoplace(3, 10)) * gleba_select(elevation, -100, -10, 3, 0, 1) / 20",
+    -- distance factor is 1, making early game easier
+    expression = "min(0.02, pirate_base_autoplace(1, 10)) * gleba_select(elevation, -500, -10, 3, 0, 1) / 20",
   },
 })
 

@@ -13,8 +13,8 @@ vehicle_leg.collision_mask = {
 }
 vehicle_leg.target_position_randomisation_distance = 0
 vehicle_leg.working_sound = nil
-vehicle_leg.minimal_step_size = 0.5
-vehicle_leg.movement_based_position_selection_distance = 1.5 -- I have no idea what this does.
+vehicle_leg.minimal_step_size = 5
+vehicle_leg.movement_based_position_selection_distance = 5 -- I have no idea what this does.
 vehicle_leg.initial_movement_speed = 0.5
 vehicle_leg.movement_acceleration = 0.01
 vehicle_leg.stretch_force_scalar = 0.1
@@ -43,6 +43,7 @@ local function make_carrier(tier, summon_positions)
   local size_name = tier.name
   local damage_scale = tier.damage_scale
 
+  ---@type data.SpiderUnitPrototype
   return {
     type = "spider-unit",
     name = "pirate-carrier-" .. size_name,
@@ -58,8 +59,8 @@ local function make_carrier(tier, summon_positions)
     max_health = health,
     resistances = {
       { type = "physical",  percent = 80 + scale * 10 },
-      { type = "explosion", percent = 50 },
-      { type = "fire",      percent = 80 },
+      { type = "explosion", percent = 70 },
+      { type = "fire",      percent = 90 },
       { type = "electric",  percent = 50 },
       { type = "laser",     percent = 80 },
       { type = "piercing",  percent = -20 },
@@ -188,12 +189,13 @@ local function make_carrier(tier, summon_positions)
         blocking_legs = {},
         walking_group = 1,
         leg_hit_the_ground_when_attacking_trigger = {
-          {
-            type = "create-fire",
-            entity_name = "fire-flame",
-            probability = 0.5 * scale,
-            offset_deviation = { { -1.5 * scale, -1.5 * scale }, { 1.5 * scale, 1.5 * scale } },
-          },
+          -- {
+          --   type = "create-fire",
+          --   entity_name = "fire-flame",
+          --   as_enemy = true,
+          --   probability = 0.5 * scale,
+          --   offset_deviation = { { -1.5 * scale, -1.5 * scale }, { 1.5 * scale, 1.5 * scale } },
+          -- },
           {
             type = "nested-result",
             action =
@@ -203,20 +205,8 @@ local function make_carrier(tier, summon_positions)
               force = "enemy",
               action_delivery =
               {
-                type = "instant",
-                target_effects =
-                {
-                  {
-                    type = "create-sticker",
-                    sticker = "fire-sticker",
-                    show_in_tooltip = true
-                  },
-                  {
-                    type = "damage",
-                    damage = { amount = 10 * damage_scale, type = "fire" },
-                    apply_damage_to_trees = false
-                  }
-                }
+                type = "stream",
+                stream = "flamethrower-fire-stream",
               }
             }
           }

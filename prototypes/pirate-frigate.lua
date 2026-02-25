@@ -165,7 +165,8 @@ local function make_frigate(tier)
     selection_box = { { -1 * scale, -1.5 * scale }, { 1 * scale, 1.5 * scale } },
     resistances = {
       { type = "physical",  decrease = 5 * scale, percent = 30 },
-      { type = "explosion", percent = 30 },
+      { type = "explosion", percent = 50 },
+      { type = "fire",      percent = 50 },
       { type = "electric",  percent = 80 },
       { type = "laser",     percent = 50 },
       { type = "piercing",  percent = -20 },
@@ -216,7 +217,7 @@ local function make_frigate(tier)
         shift = { 0, -5 * scale },
         size = 1 * scale,
         intensity = 0.7,
-        color = { 0.8, 0.7, 0.5 }
+        color = { 0.9, 0.6, 0.4 }
       },
     },
     vision_distance = 60,
@@ -281,6 +282,7 @@ local function make_frigate(tier)
       allow_try_return_to_spawner = true,
       do_separation = true,
       size_in_group = 4,
+      destroy_when_commands_fail = true,
     },
   }
 end

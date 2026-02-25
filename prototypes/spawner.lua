@@ -55,6 +55,100 @@ if mods["behemoth-enemies"] or mods["virentis"] then
   }
 end
 
+local function spawn_decoratives(min_radius_increase, max_radius_increase)
+  local decorations = {
+    {
+      type = "create-decorative",
+      decorative = "pirate-curly-roots-grey",
+      spawn_min = 2,
+      spawn_max = 3,
+      spawn_min_radius = 3,
+      spawn_max_radius = 5,
+      spread_evenly = true,
+    },
+    {
+      type = "create-decorative",
+      decorative = "pirate-coral-stunted",
+      spawn_min = 2,
+      spawn_max = 3,
+      spawn_min_radius = 4.5,
+      spawn_max_radius = 6.5,
+      spread_evenly = true,
+    },
+    {
+      type = "create-decorative",
+      decorative = "pirate-urchin-cactus",
+      spawn_min = 4,
+      spawn_max = 8,
+      spawn_min_radius = 4.5,
+      spawn_max_radius = 6.5,
+    },
+    {
+      type = "create-decorative",
+      decorative = "pirate-red-croton",
+      spawn_min = 8,
+      spawn_max = 12,
+      spawn_min_radius = 4.5,
+      spawn_max_radius = 6.5,
+    },
+    {
+      type = "create-decorative",
+      decorative = "pirate-green-croton",
+      spawn_min = 8,
+      spawn_max = 12,
+      spawn_min_radius = 4.5,
+      spawn_max_radius = 6.5,
+    },
+    {
+      type = "create-decorative",
+      decorative = "pirate-split-gill-2x2",
+      spawn_min = 4,
+      spawn_max = 8,
+      spawn_min_radius = 5,
+      spawn_max_radius = 7,
+    },
+    {
+      type = "create-decorative",
+      decorative = "pirate-split-gill-red-2x2",
+      spawn_min = 4,
+      spawn_max = 8,
+      spawn_min_radius = 5,
+      spawn_max_radius = 7,
+    },
+    {
+      type = "create-decorative",
+      decorative = "pirate-pink-phalanges",
+      spawn_min = 4,
+      spawn_max = 8,
+      spawn_min_radius = 5,
+      spawn_max_radius = 7,
+    },
+    {
+      type = "create-decorative",
+      decorative = "pirate-brambles",
+      spawn_min = 3,
+      spawn_max = 6,
+      spawn_min_radius = 5,
+      spawn_max_radius = 7,
+    },
+    {
+      type = "create-decorative",
+      decorative = "pirate-coral-water",
+      spawn_min = 3,
+      spawn_max = 6,
+      spawn_min_radius = 6,
+      spawn_max_radius = 9,
+    },
+  }
+
+  for _, decoration in pairs(decorations) do
+    decoration.spawn_min_radius = decoration.spawn_min_radius + min_radius_increase 
+    decoration.spawn_max_radius = decoration.spawn_max_radius + max_radius_increase
+  end
+
+  return decorations
+end
+
 data:extend({
   -- Fortress
   {
@@ -141,17 +235,8 @@ data:extend({
       pollution = { absolute = 40, proportional = 0.02 },
       spores = { absolute = 40, proportional = 0.02 }
     },
-    -- spawn_decorations_on_expansion = true,
-    -- spawn_decoration =
-    -- {
-    --   {
-    --     decorative = "gleba-spawner-slime",
-    --     spawn_min = 2,
-    --     spawn_max = 2,
-    --     spawn_min_radius = 0,
-    --     spawn_max_radius = 4
-    --   }
-    -- },
+    spawn_decorations_on_expansion = true,
+    spawn_decoration = spawn_decoratives(0, 0),
     autoplace = {
       force = "enemy",
       probability_expression = 0,
@@ -210,16 +295,16 @@ data:extend({
             variation_count = 4,
             draw_as_shadow = true,
           },
-          -- {
-          --   filename = "__pirate-fleet-graphics__/entities/pirate-citadel/pirate-citadel-glow.png",
-          --   width = citadel_width,
-          --   height = citadel_height,
-          --   scale = 0.5,
-          --   line_length = 4,
-          --   variation_count = 4,
-          --   draw_as_glow = true,
-          --   blend_mode = "additive",
-          -- }
+          {
+            filename = "__pirate-fleet-graphics__/entities/pirate-citadel/pirate-citadel-glow.png",
+            width = citadel_width,
+            height = citadel_height,
+            scale = 0.5,
+            line_length = 4,
+            variation_count = 4,
+            draw_as_glow = true,
+            blend_mode = "additive",
+          }
         }
       },
       water_reflection = {
@@ -244,18 +329,8 @@ data:extend({
       pollution = { absolute = 80, proportional = 0.04 },
       spores = { absolute = 80, proportional = 0.04 }
     },
-    -- spawn_decorations_on_expansion = true,
-    -- spawn_decoration =
-    -- {
-    --   {
-    --     decorative = "gleba-spawner-slime",
-    --     spawn_min = 2,
-    --     spawn_max = 2,
-    --     spawn_min_radius = 0,
-    --     spawn_max_radius = 4
-    --   }
-    -- },
-    enemy_map_color = { 0, 0.9, 0},
+    spawn_decorations_on_expansion = true,
+    spawn_decoration = spawn_decoratives(2, 1),
     autoplace = {
       force = "enemy",
       probability_expression = 0,

@@ -4,6 +4,7 @@ require("prototypes.explosion-effects")
 
 require("prototypes.spawner")
 require("prototypes.map-gen")
+require("prototypes.decoratives")
 
 require("prototypes.pirate-carrier")
 require("prototypes.pirate-skirmisher")
