@@ -8,10 +8,6 @@ The enemies design to be on [Virentis](https://mods.factorio.com/mod/virentis) (
 
 Right now it only available on Gleba, but it didn't make sense if you don't increase water or use mods like [On Wayward Seas](https://mods.factorio.com/mod/wayward-seas) or [Depths of Nauvis](https://mods.factorio.com/mod/depths_of_nauvis).
 
-## Recommend settings
-
-On Wayward Seas + Enable only Gleba.
-
 Reduce health percentage in mod settings if you feel struggle.
 
 ## Features
