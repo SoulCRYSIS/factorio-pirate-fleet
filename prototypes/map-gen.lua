@@ -1,23 +1,46 @@
+local function make_map_gen(planet_name)
+  local map_gen = data.raw["planet"][planet_name].map_gen_settings
+  if map_gen then
+    map_gen.property_expression_names["pirate_base_radius"] = "pirate_base_radius_" .. planet_name
+    map_gen.property_expression_names["pirate_base_frequency"] = "pirate_base_frequency_" .. planet_name
+    map_gen.property_expression_names["entity:pirate-fortress:control"] = "pirate_base_" .. planet_name
+    map_gen.property_expression_names["entity:pirate-fortress:probability"] = "pirate_fortress_probability"
+    map_gen.property_expression_names["entity:pirate-citadel:control"] = "pirate_base_" .. planet_name
+    map_gen.property_expression_names["entity:pirate-citadel:probability"] = "pirate_citadel_probability"
+    map_gen.autoplace_controls["pirate_base_" .. planet_name] = {}
+    map_gen.autoplace_settings["entity"].settings["pirate-fortress"] = {}
+    map_gen.autoplace_settings["entity"].settings["pirate-citadel"] = {}
+  end
+
+  data:extend({
+    {
+      type = "autoplace-control",
+      name = "pirate_base_" .. planet_name,
+      richness = false,
+      order = "pb",
+      category = "enemy",
+    },
+    {
+      type = "noise-expression",
+      name = "pirate_base_radius_" .. planet_name,
+      expression = "sqrt(control:pirate_base_" .. planet_name .. ":size) * (20 + 5 * enemy_base_intensity)"
+    },
+    {
+      type = "noise-expression",
+      name = "pirate_base_frequency_" .. planet_name,
+      expression = "(0.000003 + 0.0000015 * enemy_base_intensity) * control:pirate_base_" .. planet_name .. ":frequency"
+    },
+  })
+end
+
+if settings.startup["pirate-nauvis-enable"].value then
+  make_map_gen("nauvis")
+end
+if settings.startup["pirate-gleba-enable"].value then
+  make_map_gen("gleba")
+end
+
 data:extend({
-  {
-    type = "autoplace-control",
-    name = "pirate_base_gleba",
-    richness = false,
-    order = "pb",
-    category = "enemy",
-  },
-
-  {
-    type = "noise-expression",
-    name = "pirate_base_radius_gleba",
-    expression = "sqrt(control:pirate_base_gleba:size) * (20 + 5 * enemy_base_intensity)"
-  },
-  {
-    type = "noise-expression",
-    name = "pirate_base_frequency_gleba",
-    expression = "(0.000003 + 0.0000015 * enemy_base_intensity) * control:pirate_base_gleba:frequency"
-  },
-
   {
     type = "noise-expression",
     name = "pirate_base_probability",
@@ -73,16 +96,3 @@ data:extend({
     expression = "min(0.02, pirate_base_autoplace(1, 10)) * gleba_select(elevation, -500, -10, 3, 0, 1) / 20",
   },
 })
-
-local gleba_map_gen = data.raw["planet"]["gleba"].map_gen_settings
-if gleba_map_gen then
-  gleba_map_gen.property_expression_names["pirate_base_radius"] = "pirate_base_radius_gleba"
-  gleba_map_gen.property_expression_names["pirate_base_frequency"] = "pirate_base_frequency_gleba"
-  gleba_map_gen.property_expression_names["entity:pirate-fortress:control"] = "pirate_base_gleba"
-  gleba_map_gen.property_expression_names["entity:pirate-fortress:probability"] = "pirate_fortress_probability"
-  gleba_map_gen.property_expression_names["entity:pirate-citadel:control"] = "pirate_base_gleba"
-  gleba_map_gen.property_expression_names["entity:pirate-citadel:probability"] = "pirate_citadel_probability"
-  gleba_map_gen.autoplace_controls["pirate_base_gleba"] = {}
-  gleba_map_gen.autoplace_settings["entity"].settings["pirate-fortress"] = {}
-  gleba_map_gen.autoplace_settings["entity"].settings["pirate-citadel"] = {}
-end
